@@ -3,22 +3,20 @@ import React from "react";
 import storm from "../img/weather-icons/mostlycloudy.svg"
 
 class CurrentTemps extends React.Component {
-  state = {
-    input: ""
-  };
+
 
   render() {
     return (
         <main className="app__main">
       <figure>
           <img src={storm} alt="cloudy"></img>
-          <figcaption>overcast clouds</figcaption>
+          <figcaption>{this.props.propsData}</figcaption>
         </figure>
         <div className="describeTemp">
-          <span>Temperature</span> 10&deg;to 11&deg;C
+          <span>Temperature</span> {this.props.temp_min}&deg;C to {this.props.temp_max}&deg;C
         <div>
           <p>
-            <span>Humidity</span> 78% <span>Pressure</span> 1008.48
+            <span>Humidity</span> {this.props.humidity}% <span>Pressure</span> {this.props.pressure}
           </p>
         </div>
         </div>

@@ -2,34 +2,43 @@ import React, { Component } from "react";
 import Search from "./components/Search";
 import CurrentTemps from "./components/currentTemp";
 import HurlyTemps from "./components/hourlyTenps";
-
-/*import SayHi, { SayHello } from "./components/WeatherItem";
-import fakeWeatherData from "./fakeWeatherData.json";*/ 
-
-import storm from "./img/weather-icons/mostlycloudy.svg"
-
-import clear  from "./img/weather-icons/clear.svg"
-
-import "./App.css";
+import "./App.css"
+import fakeWeather from "../src/fakeWeatherData.json"
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      name: "Karim"
-    };
+  state={
+    myData:fakeWeather
   }
-
-  handleInputChange = value => {
-    this.setState({ name: value });
-  };
-
-  render() {
+    render() {
+      function time (data){
+        let hours =[];
+        for(let i =5; i <= 11;i++){
+          hours.push(data.list[i].dt_txt.slice(11,16))
+        }
+        return hours;
+      }
+      function temp (data){
+        let temp =[];
+        for(let i =5; i <= 11;i++){
+          temp.push((data.list[i].main.temp -273.15).toFixed())
+        }
+        return temp;
+      }
     return (
       <div className="app">
       <Search/>
-      <CurrentTemps/>
-      <HurlyTemps/>
+      <CurrentTemps propsData={this.state.myData.list[6].weather[0].description}
+      temp_min={(this.state.myData.list[6].main.temp_min - 273.15).toFixed()}
+      temp_max={(this.state.myData.list[6].main.temp_max - 273.15).toFixed()}
+      humidity={this.state.myData.list[6].main.humidity}
+      pressure={this.state.myData.list[6].main.pressure}
+
+      />
+      <HurlyTemps
+      time={time(this.state.myData)}
+      temp={temp(this.state.myData)}
+      images={fakeWeather}
+      />
     </div>
     
     );
